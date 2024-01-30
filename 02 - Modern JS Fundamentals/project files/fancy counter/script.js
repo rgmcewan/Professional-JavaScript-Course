@@ -8,6 +8,16 @@ const counterTitleEl = document.querySelector('.counter__title');
 resetButtonEl.addEventListener('click', function() {
     //set counter value to zero
     counterValueEl.textContent = 0;
+
+    // reset background color
+    counterEl.classList.remove('counter--limit');
+
+    // reset counter title
+    counterTitleEl.textContent = 'Fancy Counter';
+
+    // enable + - buttons
+    increaseButtonEl.disabled = false;
+    decreaseButtonEl.disabled = false;
 });
 
 
