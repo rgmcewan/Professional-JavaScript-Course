@@ -52,6 +52,11 @@ function incrementCounter() {
 
         //update counter title to say limit has been reached
         counterTitleEl.innerHTML = 'Limit! Buy <b>Pro</b> for >5';
+
+        // disable increase and decrease buttons at limit
+        increaseButtonEl.disabled = true;
+        decreaseButtonEl.disabled = true;
+
     }
 
     //set counter element with new value
