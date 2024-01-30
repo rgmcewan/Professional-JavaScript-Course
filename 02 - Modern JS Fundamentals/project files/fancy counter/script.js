@@ -5,7 +5,7 @@ const resetButtonEl = document.querySelector('.counter__reset-button');
 const counterValueEl = document.querySelector('.counter__value')
 const counterTitleEl = document.querySelector('.counter__title');
 
-resetButtonEl.addEventListener('click', function() {
+resetButtonEl.addEventListener('click', () => {
     //set counter value to zero
     counterValueEl.textContent = 0;
 
@@ -24,7 +24,7 @@ resetButtonEl.addEventListener('click', function() {
 });
 
 
-decreaseButtonEl.addEventListener('click', function() {
+decreaseButtonEl.addEventListener('click', () => {
     // get cuttent value of the counter
     const currentValue = counterValueEl.textContent;
 
@@ -47,7 +47,7 @@ decreaseButtonEl.addEventListener('click', function() {
     decreaseButtonEl.blur()
 });
 
-function incrementCounter() {
+const incrementCounter = () => {
     // get current value of counter
     const currnetValue = counterValueEl.textContent;
     
