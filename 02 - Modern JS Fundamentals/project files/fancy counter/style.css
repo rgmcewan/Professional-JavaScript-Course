@@ -28,6 +28,10 @@ body {
     align-items: center;
 }
 
+.counter--limit {
+    background-color: #a3d11b;
+}
+
 .counter__title {
     opacity: 0.6;
     text-transform: uppercase;

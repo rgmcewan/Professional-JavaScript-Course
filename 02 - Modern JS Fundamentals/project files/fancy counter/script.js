@@ -1,3 +1,4 @@
+const counterEl = document.querySelector('.counter');
 const increaseButtonEl = document.querySelector('.counter__button--increase');
 const decreaseButtonEl = document.querySelector('.counter__button--decrease');
 const resetButtonEl = document.querySelector('.counter__reset-button');
@@ -38,7 +39,16 @@ function incrementCounter() {
     const currnetValueAsNumber = +currnetValue;
 
     //increment by 1
-    const newValue = currnetValueAsNumber + 1;
+    let newValue = currnetValueAsNumber + 1;
+
+    // check if new value is greater than five
+    if (newValue > 5) {
+        // if it is, force it to be five
+        newValue = 5;
+
+        // give visual indicator that limit has been reached
+        counterEl.classList.add('counter--limit');
+    }
 
     //set counter element with new value
     counterValueEl.textContent = newValue;
