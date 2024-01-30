@@ -3,6 +3,7 @@ const increaseButtonEl = document.querySelector('.counter__button--increase');
 const decreaseButtonEl = document.querySelector('.counter__button--decrease');
 const resetButtonEl = document.querySelector('.counter__reset-button');
 const counterValueEl = document.querySelector('.counter__value')
+const counterTitleEl = document.querySelector('.counter__title');
 
 resetButtonEl.addEventListener('click', function() {
     //set counter value to zero
@@ -48,6 +49,9 @@ function incrementCounter() {
 
         // give visual indicator that limit has been reached
         counterEl.classList.add('counter--limit');
+
+        //update counter title to say limit has been reached
+        counterTitleEl.innerHTML = 'Limit! Buy <b>Pro</b> for >5';
     }
 
     //set counter element with new value
