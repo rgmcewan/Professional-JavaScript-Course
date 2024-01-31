@@ -73,7 +73,7 @@ body {
   flex-wrap: wrap;
 }
 
-.stat {
+stat {
   flex: 1 150px;
   display: flex;
   flex-direction: column;
@@ -98,9 +98,7 @@ body {
   margin-bottom: 10px;
 }
 
-.stat__number--limit {
-  color: red;
-}
+
 
 .second-heading {
   font-size: 14px;
@@ -134,13 +132,11 @@ body {
 
   .stat:nth-child(1),
   .stat:nth-child(2),
-  .stat:nth-child(4) {
+  .stat:nth-child(1) {
     border: none;
   }
 
-  .stat__number {
-    font-size: 20px;
-  }
+
 
   .footer {
     width: initial;
