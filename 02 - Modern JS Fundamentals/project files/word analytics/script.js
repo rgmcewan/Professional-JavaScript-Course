@@ -13,9 +13,13 @@ textareaEl.addEventListener('input', function() {
     // add visual indicator if limit is exceeded
     if (twitterCharactersLeft < 0) {
         twitterNumberEl.classList.add('stat__number--Limit');
+    } else {
+        twitterNumberEl.classList.remove('stat__number--Limit');
     }
     if (facebookCharactersLeft < 0) {
         facebookNumberEl.classList.add('stat__number--Limit');
+    } else {
+        facebookNumberEl.classList.remove('stat__number--Limit');
     }
 
     // set new numbers
