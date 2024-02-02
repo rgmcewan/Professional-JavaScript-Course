@@ -7,7 +7,20 @@ const wordsNumberEl = document.querySelector('.stat__number--words');
 textareaEl.addEventListener('input', function() {
     // determine new numbers
     const numberOfCharacters = textareaEl.value.length;
+    const twitterCharactersLeft = 280 - numberOfCharacters;
+    const facebookCharactersLeft = 2200 - numberOfCharacters;
+
+    // add visual indicator if limit is exceeded
+    if (twitterCharactersLeft < 0) {
+        twitterNumberEl.classList.add('stat__number--Limit');
+    }
+    if (facebookCharactersLeft < 0) {
+        facebookNumberEl.classList.add('stat__number--Limit');
+    }
 
     // set new numbers
     charactersNumberEl.textContent =  numberOfCharacters;
+    twitterNumberEl.textContent = twitterCharactersLeft;
+    facebookNumberEl.textContent = facebookCharactersLeft
+
 });
