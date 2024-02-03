@@ -5,7 +5,18 @@ const facebookNumberEl = document.querySelector('.stat__number--facebook');
 const wordsNumberEl = document.querySelector('.stat__number--words');
 
 textareaEl.addEventListener('input', function() {
+    // example of input basic validation
+    if (textareaEl.value.includes('<script>')) {
+        alert('You cannot use <script>');
+        textareaEl.value = textareaEl.value.replace('<script>', '');
+    }
+    
+    
     // determine new numbers
+    let numberOfWords = textareaEl.value.split(' ').length;
+    if (textareaEl.value.length === 0) {
+        numberOfWords = 0;
+    }
     const numberOfCharacters = textareaEl.value.length;
     const twitterCharactersLeft = 280 - numberOfCharacters;
     const facebookCharactersLeft = 2200 - numberOfCharacters;
@@ -23,6 +34,7 @@ textareaEl.addEventListener('input', function() {
     }
 
     // set new numbers
+    wordsNumberEl.textContent = numberOfWords;
     charactersNumberEl.textContent =  numberOfCharacters;
     twitterNumberEl.textContent = twitterCharactersLeft;
     facebookNumberEl.textContent = facebookCharactersLeft
