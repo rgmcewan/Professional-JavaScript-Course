@@ -4,7 +4,7 @@ const twitterNumberEl = document.querySelector('.stat__number--twitter');
 const facebookNumberEl = document.querySelector('.stat__number--facebook');
 const wordsNumberEl = document.querySelector('.stat__number--words');
 
-textareaEl.addEventListener('input', function() {
+const inputHandler= () => { // FUNCTION DECLARATION
     // example of input basic validation
     if (textareaEl.value.includes('<script>')) {
         alert('You cannot use <script>');
@@ -39,4 +39,6 @@ textareaEl.addEventListener('input', function() {
     twitterNumberEl.textContent = twitterCharactersLeft;
     facebookNumberEl.textContent = facebookCharactersLeft
 
-});
+}
+
+textareaEl.addEventListener('input', inputHandler);
