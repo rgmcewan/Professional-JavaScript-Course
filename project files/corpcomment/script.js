@@ -3,6 +3,7 @@ const textareaEl = document.querySelector('.form__textarea');
 const counterEl = document.querySelector('.counter');
 const formEl = document.querySelector('.form');
 const feedbackListEl = document.querySelector('.feedbacks');
+const submitBtnEl = document.querySelector('.submit-btn');
 
 // COUNTER COMPONENT
 
@@ -81,13 +82,20 @@ const submitHandler = event => {
                 <p class="feedback__company">${company}</p>
                 <p class="feedback__text">${text}</p>
             </div>
-            <p class="feedback__date">${daysAgo}</p>
+            <p class="feedback__date">${daysAgo === 0 ? 'NEW' : `${daysAgo}d`}</p>
         </li>
     `;
 
     // Insert new feedback item into list
     feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML);
-    
+
+    // clear the text area
+    textareaEl.value = '';
+
+    // blur the submit button
+    submitBtnEl.blur();
+    // reset the counter
+    counterEl.textContent = '150';
     
     //test the submit and get information about the event in the console (NOT IN COURSE CODE)
     console.log(text);
