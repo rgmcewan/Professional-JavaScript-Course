@@ -34,11 +34,24 @@ const submitHandler = event => {
     const text = textareaEl.value;
     
     // validate test (eg check if hashtag is present and text is long enough)
-    if (text.includes('#')) {
+    if (text.includes('#') && (text.length > 4)) {
+        // show valid indicator (green outline)
         formEl.classList.add('form--valid');
+        
+        // remove the visual indicator
+        setTimeout(() => {
+            formEl.classList.remove('form--valid')
+        }, 2000);
     } else {
+        // show invalid indicator (red outline)
         formEl.classList.add('form--invalid');
-    }
+        setTimeout(() => {
+            formEl.classList.remove('form--invalid')
+    }, 2000);
+
+    // focus the text area again
+    textareaEl.focus();
+}
 
 
     //test the submit and get information about the event in the console (NOT IN COURSE CODE)
