@@ -1,4 +1,6 @@
 // -- GLOBAL --
+const MAX_CHARS = 150;
+
 const textareaEl = document.querySelector('.form__textarea');
 const counterEl = document.querySelector('.counter');
 const formEl = document.querySelector('.form');
@@ -9,7 +11,7 @@ const submitBtnEl = document.querySelector('.submit-btn');
 
 const inputHandler = () => {
     // determine maximum number of characters
-    const maxNrChars = 150;
+    const maxNrChars = MAX_CHARS;
 
     // determine number of characters the user has typed
     const nrCharsTyped = textareaEl.value.length;
@@ -26,7 +28,18 @@ textareaEl.addEventListener('input', inputHandler);
 
 
 
-// SUBMIT COMPONENT
+// FORM COMPONENT
+
+const showVisualIndicator = textCheck => {
+    const className = textCheck === 'valid' ? 'form--valid' : 'form--invalid';
+    // show valid indicator (green outline)
+    formEl.classList.add(className);
+        
+    // remove the visual indicator
+    setTimeout(() => {
+        formEl.classList.remove(className)
+    }, 2000);
+};
 
 const submitHandler = event => {
     //prevent default browser action (submitting form data to the 'action' address and loading a new page)
@@ -37,19 +50,9 @@ const submitHandler = event => {
     
     // validate test (eg check if hashtag is present and text is long enough)
     if (text.includes('#') && (text.length > 4)) {
-        // show valid indicator (green outline)
-        formEl.classList.add('form--valid');
-        
-        // remove the visual indicator
-        setTimeout(() => {
-            formEl.classList.remove('form--valid')
-        }, 2000);
+        showVisualIndicator('valid');
     } else {
-        // show invalid indicator (red outline)
-        formEl.classList.add('form--invalid');
-        setTimeout(() => {
-            formEl.classList.remove('form--invalid')
-    }, 2000);
+        showVisualIndicator('invalid');
 
     // focus the text area again
     textareaEl.focus();
@@ -95,7 +98,7 @@ const submitHandler = event => {
     // blur the submit button
     submitBtnEl.blur();
     // reset the counter
-    counterEl.textContent = '150';
+    counterEl.textContent = MAX_CHARS;
     
     //test the submit and get information about the event in the console (NOT IN COURSE CODE)
     console.log(text);
