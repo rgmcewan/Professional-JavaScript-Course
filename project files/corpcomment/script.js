@@ -204,4 +204,35 @@ fetch(`${BASE_API_URL}/feedbacks`)
 });
 
 // -- HASHTAG LIST COMPONENT -- //
+const clickHandler2 = event => {
+    const clickedEl = event.target;
 
+    // stop function if click happens in list but outside buttons
+    // if(clickedEl.className === 'hashtags') {
+    //     return;
+    // }
+
+    // another simple way to write the same above if statement
+    if (clickedEl.className === 'hashtags') return;
+
+    // extract company name from the button clicked on
+    const companyNameFromHashtag = clickedEl.textContent.substring(1).toLowerCase().trim();
+
+    // iterate over each feedback item in the list
+    feedbackListEl.childNodes.forEach(childNode => {
+        // stop this iteration if its  a text node
+        if (childNode.nodeType === 3) return;
+
+        // extract company name
+        const companyNameFromFeedbackItem = childNode.querySelector('.feedback__company').textContent.toLowerCase().trim();
+
+        // remove feedback items if company names are not equal 
+        if (companyNameFromHashtag !== companyNameFromFeedbackItem) {
+            childNode.remove();
+        }
+    });
+
+    console.log(clickedEl);
+};
+
+hashtagListEl.addEventListener('click', clickHandler2);
