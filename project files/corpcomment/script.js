@@ -1,5 +1,6 @@
 // -- GLOBAL --
 const MAX_CHARS = 150;
+const BASE_API_URL = 'https://bytegrad.com/course-assets/js/1/api';
 
 const textareaEl = document.querySelector('.form__textarea');
 const counterEl = document.querySelector('.counter');
@@ -7,6 +8,29 @@ const formEl = document.querySelector('.form');
 const feedbackListEl = document.querySelector('.feedbacks');
 const submitBtnEl = document.querySelector('.submit-btn');
 const spinnerEl = document.querySelector('.spinner');
+
+const renderFeedbackItem = feedbackItem => {
+    // new feedback item HTML
+    const feedbackItemHTML = `
+        <li class="feedback">
+            <button class="upvote">
+                <i class="fa-solid fa-caret-up upvote__icon"></i>
+                <span class="upvote__count">${feedbackItem.upvoteCount}</span>
+            </button>
+            <section class="feedback__badge">
+                <p class="feedback__letter">${feedbackItem.badgeLetter}</p>
+            </section>
+            <div class="feedback__content">
+                <p class="feedback__company">${feedbackItem.company}</p>
+                <p class="feedback__text">${feedbackItem.text}</p>
+            </div>
+            <p class="feedback__date">${feedbackItem.daysAgo === 0 ? 'NEW' : `${feedbackItem.daysAgo}d`}</p>
+        </li>
+    `;
+
+    // Insert new feedback item into list
+    feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML);
+};
 
 // COUNTER COMPONENT
 
@@ -72,26 +96,34 @@ const submitHandler = event => {
     const upvoteCount = 0;
     const daysAgo = 0;
 
-    // new feedback item HTML
-    const feedbackItemHTML = `
-        <li class="feedback">
-            <button class="upvote">
-                <i class="fa-solid fa-caret-up upvote__icon"></i>
-                <span class="upvote__count">${upvoteCount}</span>
-            </button>
-            <section class="feedback__badge">
-                <p class="feedback__letter">${badgeLetter}</p>
-            </section>
-            <div class="feedback__content">
-                <p class="feedback__company">${company}</p>
-                <p class="feedback__text">${text}</p>
-            </div>
-            <p class="feedback__date">${daysAgo === 0 ? 'NEW' : `${daysAgo}d`}</p>
-        </li>
-    `;
+    // create feedback item in list
+    const feedbackItem = {
+        upvoteCount: upvoteCount,  // Because they are the same name you could remove the second variable and the colon
+        company: company,           // same goes here and for the rest...
+        badgeLetter: badgeLetter,
+        daysAgo: daysAgo,
+        text: text
+    };
+    // render feedback item
+    renderFeedbackItem(feedbackItem);
 
-    // Insert new feedback item into list
-    feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML);
+    // send feedback item to server
+    fetch(`${BASE_API_URL}/feedbacks`, {
+    // fetch('/feedbacks', {
+
+    method: 'POST',
+        body: JSON.stringify(feedbackItem),
+        headers: {
+            Accept: 'application/json',
+            'Conent-Type': 'application/json'
+        }
+    }).then(response => {
+        if (!response.ok) {
+            console.log('Something went wrong');
+            return;
+        }
+        console.log('Successfully Submitted');
+    }).catch(error => console.log(error));
 
     // clear the text area
     textareaEl.value = '';
@@ -113,36 +145,18 @@ formEl.addEventListener('submit', submitHandler);
 
 
 // -- FEEDBACK LIST COMPONENT --
-fetch('https://bytegrad.com/course-assets/js/1/api/feedbacks')
+fetch(`${BASE_API_URL}/feedbacks`)
+// fetch('/feedbacks')
+
+
     .then(response => response.json())
     .then(data => {
         // remove spinner
         spinnerEl.remove();
 
         //iterate over each element in feedbacks array then render it in the list
-        data.feedbacks.forEach(feedbackItem => {
-            const feedbackItemHTML = `
-                <li class="feedback">
-                    <button class="upvote">
-                        <i class="fa-solid fa-caret-up upvote__icon"></i>
-                        <span class="upvote__count">${feedbackItem.upvoteCount}</span>
-                    </button>
-                    <section class="feedback__badge">
-                        <p class="feedback__letter">${feedbackItem.badgeLetter}</p>
-                    </section>
-                    <div class="feedback__content">
-                        <p class="feedback__company">${feedbackItem.company}</p>
-                        <p class="feedback__text">${feedbackItem.text}</p>
-                    </div>
-                    <p class="feedback__date">${feedbackItem.daysAgo === 0 ? 'NEW' : `${feedbackItem.daysAgo}d`}</p>
-                </li>
-            `;
-        
-        // Insert new feedback item into list
-            feedbackListEl.insertAdjacentHTML('beforeend', feedbackItemHTML);
-            
-        });
-})
+        data.feedbacks.forEach(feedbackItem => renderFeedbackItem(feedbackItem));
+    })
 .catch(error => {
     feedbackListEl.textContent = `Failed to fetch feedback items. Error Message: ${error.message}`
 });
