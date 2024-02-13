@@ -8,6 +8,7 @@ const formEl = document.querySelector('.form');
 const feedbackListEl = document.querySelector('.feedbacks');
 const submitBtnEl = document.querySelector('.submit-btn');
 const spinnerEl = document.querySelector('.spinner');
+const hashtagListEl = document.querySelector('.hashtags');
 
 const renderFeedbackItem = feedbackItem => {
     // new feedback item HTML
@@ -145,6 +146,47 @@ formEl.addEventListener('submit', submitHandler);
 
 
 // -- FEEDBACK LIST COMPONENT --
+
+const clickHandler = event => {
+    // get clicked HTML element
+    const clickedEl = event.target
+
+    // determine if user intended to upvote or expand
+    const upvoteIntention = clickedEl.className.includes('upvote');
+
+    // run appropriate logic for each item
+    if (upvoteIntention) {
+        
+        // get the closest upvote button
+        const upvoteBtnEl = clickedEl.closest('.upvote');
+
+        // disable upvote button
+        upvoteBtnEl.disabled = true;
+
+        // select the upvote count element within the upvote button
+        const upvoteCountEl = upvoteBtnEl.querySelector('.upvote__count');
+
+        // get currently displayed upvote count as a number (+ converts from a string(default) to a number)
+        let upvoteCount = +upvoteCountEl.textContent;
+
+        // increment upvoteCount by 1 (one)
+
+        // commented this out due to adding 1 in the next line using ++ // upvoteCount++;
+
+        // set update count in HTML
+        upvoteCountEl.textContent = ++upvoteCount; // ++ before variable name will increment first then assign otherwise it will assign then update
+
+        // added some extra stuff in the console log
+        console.log(typeof upvoteCount, 'is the type of variable and the number is', upvoteCount);
+
+    } else {
+        // expand the clicked feedback item
+        clickedEl.closest('.feedback').classList.toggle('feedback--expand');
+    }
+};
+
+feedbackListEl.addEventListener('click', clickHandler);
+
 fetch(`${BASE_API_URL}/feedbacks`)
 // fetch('/feedbacks')
 
@@ -160,3 +202,6 @@ fetch(`${BASE_API_URL}/feedbacks`)
 .catch(error => {
     feedbackListEl.textContent = `Failed to fetch feedback items. Error Message: ${error.message}`
 });
+
+// -- HASHTAG LIST COMPONENT -- //
+
