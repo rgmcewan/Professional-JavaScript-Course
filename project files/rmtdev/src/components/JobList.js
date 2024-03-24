@@ -63,12 +63,11 @@ const clickHandler = event => {
     const id = jobItemEl.children[0].getAttribute('href');
 
     // fetch job item data
-    fetch(`${BASE_API_URL}/api/jobs/${id}`)
+    fetch(`${BASE_API_URL}/jobss/${id}`)
         .then(response => {
-            if (!response.ok) {
-                console.log('something went wrong');
-                return;
-            }
+            if (!response.ok) { // 4xx, 5xx status code
+                throw new Error('Resource Issue (E.G. Resource doesn\'t exist or server issue');
+                }
 
             return response.json();
 
@@ -84,7 +83,11 @@ const clickHandler = event => {
              renderJobDetails(jobItem);
              
      })
-     .catch(error => console.log(error));
+     .catch(error => { // network problem or other errors (e.g. trying to parse something not JSON as JSON)
+            
+        renderSpinner('job-details'),
+        renderError(error.message);
+    });
 };
 
 jobListSearchEl.addEventListener('click', clickHandler);
