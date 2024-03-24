@@ -6,6 +6,7 @@ import {
 
 import renderSpinner from './Spinner.js';
 import renderJobDetails from './JobDetails.js';
+import renderError from './Error.js';
 
 const renderJobList = jobItems => {
     // render job items in the search job list
@@ -36,7 +37,7 @@ const renderJobList = jobItems => {
 };
 
 // -- JOB LIST COMPONENT --
-const clickHandler = event => {
+const clickHandler = async event => {
     // prevent default behavious (navigate)
     event.preventDefault();
 
@@ -63,31 +64,57 @@ const clickHandler = event => {
     const id = jobItemEl.children[0].getAttribute('href');
 
     // fetch job item data
-    fetch(`${BASE_API_URL}/jobss/${id}`)
-        .then(response => {
-            if (!response.ok) { // 4xx, 5xx status code
-                throw new Error('Resource Issue (E.G. Resource doesn\'t exist or server issue');
-                }
+    try {
+        const response = await fetch(`${BASE_API_URL}/jobs/${id}`);
+        const data = await response.json();
 
-            return response.json();
+        if (!response.ok) { // 4xx, 5xx status code
+            throw new Error(data.description);
+        }
 
-        })
-        .then(data => {
-            // extract job item
-            const { jobItem } = data;
+        // extract job item
+        const { jobItem } = data;
 
-            // remove spinner
-            renderSpinner('job-details');
+        // remove spinner
+        renderSpinner('job-details');
 
-             // render job details
-             renderJobDetails(jobItem);
-             
-     })
-     .catch(error => { // network problem or other errors (e.g. trying to parse something not JSON as JSON)
-            
+        // render job details
+        renderJobDetails(jobItem);
+    } catch (error) {
         renderSpinner('job-details'),
-        renderError(error.message);
-    });
+            renderError(error.message);
+    }
+
+    // -- OLD SYNTAX --
+
+
+    // fetch(`${BASE_API_URL}/jobss/${id}`)
+    //     .then(response => {
+    //         if (!response.ok) { // 4xx, 5xx status code
+    //             throw new Error('Resource Issue (E.G. Resource doesn\'t exist or server issue');
+    //             }
+
+    //         return response.json();
+
+    //     })
+    //     .then(data => {
+    //         // extract job item
+    //         const { jobItem } = data;
+
+    //         // remove spinner
+    //         renderSpinner('job-details');
+
+    //          // render job details
+    //          renderJobDetails(jobItem);
+
+    //  })
+    //  .catch(error => { // network problem or other errors (e.g. trying to parse something not JSON as JSON)
+
+    //     renderSpinner('job-details'),
+    //     renderError(error.message);
+    // });
+
+
 };
 
 jobListSearchEl.addEventListener('click', clickHandler);
