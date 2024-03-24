@@ -3,7 +3,7 @@ import {
     errorEl
 } from '../common.js';
 
-const renderError = message => {
+const renderError = (message = 'Add an arguement to renderError') => {
     errorTextEl.textContent = message;
         errorEl.classList.add('error--visible');
 
