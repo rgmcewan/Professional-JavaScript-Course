@@ -3,7 +3,8 @@ import {
     searchInputEl,
     searchFormEl,
     jobListSearchEl,
-    numberEl
+    numberEl,
+    getData
 } from '../common.js';
 
 import renderError from './Error.js';
@@ -37,12 +38,7 @@ const submitHandler = async event => {
 
     // fetch search results
     try {
-        const response = await fetch(`${BASE_API_URL}/jobs?search=${searchText}`);
-        const data = await response.json();
-
-        if (!response.ok) { // 4xx, 5xx status code
-            throw new Error(data.description);
-        }
+        const data = await getData(`${BASE_API_URL}/jobs?search=${searchText}`);
 
         //rxtract job items
         const { jobItems } = data;
