@@ -2,6 +2,13 @@
 export const BASE_API_URL = 'https://bytegrad.com/course-assets/js/2/api';
 export const DEFAUT_DISPLAY_TIME = 3500;
 
+// -- STATE OBJECT --
+export const state = { // although this is a const and connot normally be changed it is an object so the parameters within the object can still be changed
+                       // for example searchJobItems will become state and state cannot change but state.postcode parameter can be changed which is actually
+                       // searchJobItems.postcode (just an example)
+    searchJobItems: [],
+};
+
 // -- SELECTORS --
 export const bookmarksBtnEl = document.querySelector('.bookmarks-btn');
 export const errorTextEl = document.querySelector('.error__text');

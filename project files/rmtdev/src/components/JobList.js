@@ -1,5 +1,6 @@
 import {
     BASE_API_URL,
+    state,
     jobListSearchEl,
     jobDetailsContentEl,
     getData
@@ -11,7 +12,7 @@ import renderError from './Error.js';
 
 const renderJobList = jobItems => {
     // render job items in the search job list
-    jobItems.slice(0, 7).forEach(jobItem => {
+    state.searchJobItems.slice(0, 7).forEach(jobItem => {
         const newJobItemHTML = `
         <li class="job-item">
                 <a class="job-item__link" href="${jobItem.id}">
