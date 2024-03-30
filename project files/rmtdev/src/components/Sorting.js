@@ -1,8 +1,10 @@
 import {
+    state,
     sortingEl,
     sortingBtnRecentEl,
     sortingBtnRelevantEl
 } from '../common.js';
+import renderJobList from './JobList.js';
 
 const clickHandler = event => {
     // get the clicked button element
@@ -12,14 +14,31 @@ const clickHandler = event => {
     if (!clickedButtonEl) return;
 
     // check if intention is recent or relevant sorting
-    const recent = clickedButtonEl.classname.includes('--recent') ? true : false; //boolean
+    const recent = clickedButtonEl.className.includes('--recent') ? true : false; //boolean
+
+    // make sorting button look active
+    if (recent) {
+        sortingBtnRecentEl.classList.add('sorting__button--active');
+        sortingBtnRelevantEl.classList.remove('sorting__button--active');
+    } else{
+        sortingBtnRecentEl.classList.remove('sorting__button--active');
+        sortingBtnRelevantEl.classList.add('sorting__button--active');
+    }
 
     // sort the job items
+    // how[].sort works: return positive number to sort b higher than a, return negative number to sort a higher than b, return 0 to stay same
     if (recent) {
-
+        state.searchJobItems.sort((a, b) => {
+            return a.daysAgo - b.daysAgo; // e.g. if a.daysAgo = 10 and b.daysAgo = 5, then b is more recent, b should be sorted higher than a, return a positive number
+        });
     } else {
-
+        state.searchJobItems.sort((a, b) => {
+        return b.relevanceScore - a.relevanceScore; // e.g. if a.relevanceScore = 94 and b.relevanceScore = 78, then a is more relevant, a should be sorted higher than b
+        });
     }
+
+    // render job items in list
+    renderJobList();
 
 };
 

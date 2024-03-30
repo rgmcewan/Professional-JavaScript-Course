@@ -10,7 +10,12 @@ import renderSpinner from './Spinner.js';
 import renderJobDetails from './JobDetails.js';
 import renderError from './Error.js';
 
-const renderJobList = jobItems => {
+const renderJobList = () => {
+    // remove previous job items
+    jobListSearchEl.innerHTML = '';
+
+    // display job items
+    
     // render job items in the search job list
     state.searchJobItems.slice(0, 7).forEach(jobItem => {
         const newJobItemHTML = `
