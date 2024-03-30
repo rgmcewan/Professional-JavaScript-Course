@@ -16,7 +16,7 @@ const renderJobList = () => {
     jobListSearchEl.innerHTML = '';
 
     // display job items
-    
+
     // render job items in the search job list
     state.searchJobItems.slice(state.currentPage * RESULTS_PER_PAGE - RESULTS_PER_PAGE, state.currentPage * RESULTS_PER_PAGE).forEach(jobItem => {
         const newJobItemHTML = `
@@ -70,6 +70,9 @@ const clickHandler = async event => {
 
     // get the id of the job item that was clicked
     const id = jobItemEl.children[0].getAttribute('href');
+
+    // add id to URL                            // REMEMBER THIS ONE!
+    history.pushState(null, '', `/#${id}`);
 
     // fetch job item data
     try {
