@@ -8,6 +8,7 @@ export const state = { // although this is a const and connot normally be change
                        // for example searchJobItems will become state and state cannot change but state.postcode parameter can be changed which is actually
                        // searchJobItems.postcode (just an example)
     searchJobItems: [],
+    bookmarkJobItems: [],
     activeJobItem: {},
     currentPage: 1
 };
