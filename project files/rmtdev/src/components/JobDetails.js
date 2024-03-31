@@ -1,6 +1,7 @@
 import {
+    state,
     jobDetailsContentEl
-} from "../common.js";
+} from '../common.js';
 
 const renderJobDetails = jobItem => {
     const jobDetailsHTML = `
@@ -14,7 +15,7 @@ const renderJobDetails = jobItem => {
                      <div class="job-info__below-badge">
                          <time class="job-info__time">${jobItem.daysAgo}d</time>
                          <button class="job-info__bookmark-btn">
-                             <i class="fa-solid fa-bookmark job-info__bookmark-icon"></i>
+                             <i class="fa-solid fa-bookmark job-info__bookmark-icon ${state.bookmarkJobItems.some(bookmarkJobItem => bookmarkJobItem.id === jobItem.id) && 'job-info__bookmark-icon--bookmarked'}"></i>
                          </button>
                      </div>
                  </div>
